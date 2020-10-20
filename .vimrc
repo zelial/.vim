@@ -10,6 +10,8 @@ set title
 
 "indentation
 filetype plugin indent on
+set autoindent
+set smartindent
 set shiftwidth=4
 "pri odsazovani pomoci < a > zaokrouhluj na nasobky shiftwidthu
 set shiftround
@@ -43,10 +45,13 @@ set laststatus=2
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=2
 "let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_auto_loc_list=0
 let g:syntastic_loc_list_height = 5
+"let g:syntastic_python_checkers=['pylint']
+let g:syntastic_python_pylint_exe = 'python -m pylint-2.7'
 let g:syntastic_python_pylint_quiet_messages = { "regex": 
         \[
         \'multiple-statements',
@@ -54,7 +59,9 @@ let g:syntastic_python_pylint_quiet_messages = { "regex":
         \'invalid-name',
         \'bad-continuation',
         \]}
-nnoremap <F5> :w<CR>:SyntasticCheck<CR>
+" ignorelist for shellcheck
+let g:syntastic_sh_shellcheck_args = "--exclude SC2086"
+" nnoremap <F5> :w<CR>:SyntasticCheck<CR>
 
 "skace na levou zavorku pri psani prave
 set showmatch
@@ -189,65 +196,9 @@ colorscheme zelial
 :syn match Braces display '[{}()\[\]]'
 :hi Braces guifg=red
 
-
-"https://github.com/luochen1990/rainbow
-"let g:rainbow_active = 1
-"let g:rainbow_conf = {
-"             \'guifgs': ['goldenrod', 'goldenrod', 'goldenrod', 'goldenrod'],
-"    \   'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
-"    \   'operators': '_,_',
-"    \   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
-"    \   'separately': {
-"    \       '*': {},
-"    \       'lisp': {
-"    \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-"    \           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
-"    \       },
-"    \       'vim': {
-"    \           'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
-"    \       },
-"    \       'tex': {
-"    \           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
-"    \       },
-"    \       'css': 0,
-"    \       'stylus': 0,
-"    \   }
-"    \}
-
-"https://github.com/oblitum/rainbow
-au FileType c,cpp,objc,objcpp,python,sh call rainbow#load()
-
-
 "MRU
 let MRU_Max_Entries = 2000
 let MRU_Window_Height = 15
-
-"Startify
-let g:startify_custom_footer =
-    \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['','']
-
-let g:startify_custom_header = [
-            \ 'Vim cheat sheet:',
-            \ 'Multicursor: Ctrl n (f=v^n^n^n...)',
-            \ 'Toggle class navigator: F4',
-            \ 'Align wiki table :Tabularize /||',
-            \ '',
-            \ ' * open new line below/above o/O',
-            \ '',
-            \ ' * double quote a variable ysiW" (surrounds)',
-            \ '',
-            \ ' * expand/shrink selection +/_',
-            \ '',
-            \ ' * next/prev class ][ / ]]',
-            \ ' * next/prev method ]m / [m',
-            \ '',
-            \ ' * add/del mark m[a-zA-Z]',
-            \ ' * goto mark `[a-zA-Z]',
-            \ '',
-            \ ' * motion word: \\w',
-            \ ' * motion search char: \\s<char>',
-            \ ' * :help motion.txt',
-            \ ]
 
 "vim-expand-region
 call expand_region#custom_text_objects({
@@ -263,7 +214,7 @@ call expand_region#custom_text_objects({
 "deps: vim-snippets, tlib_vim, vim-addon-mw-utils
 
 
-"autoformat/prettyprint stuff based on filetype usign 'gq'
+"autoformat/prettyprint stuff based on filetype usign 'gqq'
 let format_xml="xmllint --format -"
 autocmd FileType xml let &formatprg=format_xml
 let format_json="python -m json.tool"

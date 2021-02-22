@@ -177,9 +177,6 @@ call pathogen#helptags()
 "tagbar class inspector
 nnoremap <F4> :TagbarToggle<CR>
 
-"fold class
-"nnoremap <F9> :set nowrapscan<CR>/class <CR>jzA:set wrapscan<CR>
-
 "open list of revisions automatically after git log
 command Glog2 :silent Glog | copen
 
@@ -199,20 +196,6 @@ colorscheme zelial
 "MRU
 let MRU_Max_Entries = 2000
 let MRU_Window_Height = 15
-
-"vim-expand-region
-call expand_region#custom_text_objects({
-      \ "\/\\n\\n\<CR>": 1, 
-      \ 'a]' :1,
-      \ 'ab' :1,
-      \ 'aB' :1,
-      \ 'ii' :1,
-      \ 'ai' :0,
-      \ })
-
-"Snipmate
-"deps: vim-snippets, tlib_vim, vim-addon-mw-utils
-
 
 "autoformat/prettyprint stuff based on filetype usign 'gqq'
 let format_xml="xmllint --format -"

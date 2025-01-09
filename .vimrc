@@ -2,9 +2,6 @@ set nocompatible
 set nowrap
 set history=1000
 
-"start maximized
-set lines=999 columns=999
-
 "set terminal title
 set title
 
@@ -40,28 +37,6 @@ set wildmode=list:longest
 
 "nastaveni statuslajny (ten modry radek dole)
 set laststatus=2
-
-"Syntastic syntax checker
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_jump=2
-"let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_warning_symbol = "⚠"
-let g:syntastic_auto_loc_list=0
-let g:syntastic_loc_list_height = 5
-"let g:syntastic_python_checkers=['pylint']
-let g:syntastic_python_pylint_exe = 'python -m pylint-2.7'
-let g:syntastic_python_pylint_quiet_messages = { "regex": 
-        \[
-        \'multiple-statements',
-        \'bad-whitespace',
-        \'invalid-name',
-        \'bad-continuation',
-        \]}
-" ignorelist for shellcheck
-let g:syntastic_sh_shellcheck_args = "--exclude SC2086"
-" nnoremap <F5> :w<CR>:SyntasticCheck<CR>
 
 "skace na levou zavorku pri psani prave
 set showmatch
@@ -115,17 +90,6 @@ set complete=.,w,b,u,t,i,k,]
 "rhtslib doplnovani
 set dictionary=/usr/share/rhts-library/dictionary.vim 
 
-"Use TAB to complete when typing words, else inserts TABs as usual.
-"Uses dictionary and source files to find matching words to complete.
-"function! Tab_Or_Complete()
-"  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-"    return "\<C-N>"
-"  else
-"    return "\<Tab>"
-"  endif
-"endfunction
-":inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-
 "will set cwd to dir of currently edited file (good for local tag files)
 set autochdir
 
@@ -171,8 +135,8 @@ au BufNewFile,BufRead polarion* set ft=clojure
 map <C-S-Tab> <Esc>:tabprev<CR>
 map <C-Tab> <Esc>:tabnext<CR>
 
-execute pathogen#infect()
-call pathogen#helptags()
+" native plugi nmanagement
+packloadall
 
 "tagbar class inspector
 nnoremap <F4> :TagbarToggle<CR>
@@ -207,3 +171,28 @@ let format_html="tidy -i -utf8 -ashtml"
 " turn rlRun command syntax highlight on
 let bl_rlRun_sub = 1
 autocmd FileType html let &formatprg=format_html
+
+" Python linting etc
+let g:ale_linters = { "python": ["ruff"] }
+let g:ale_fixers = { "python": ["black", "ruff"]}
+
+" Vundle
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'yegappan/mru'
+Plugin 'dense-analysis/ale'
+Plugin 'Yggdroot/indentLine'
+Plugin 'liuchengxu/vim-which-key'
+Plugin 'pearofducks/ansible-vim'
+
+let MRU_Max_Entries = 1000
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required

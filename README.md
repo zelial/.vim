@@ -2,9 +2,10 @@
 .vim
 ====
 
-My personal vim config.
+My personal vim config. Old vim and newer neovim.
 
 Installation
 ------------
 
-Put .vimrc into $HOME/
+
+Put nvim/ into ~/.config/.

@@ -38,8 +38,8 @@ vim.opt.laststatus = 2
 vim.opt.showmatch = true
 
 -- Scrolling
-vim.opt.scrolloff = 5
-vim.opt.sidescroll = 5
+vim.opt.scrolloff = 10
+vim.opt.sidescroll = 10
 
 -- Display settings
 vim.opt.display = { "lastline" }
@@ -142,6 +142,9 @@ require("lazy").setup({
     enabled = true,
     notify = false,
     },
+  rocks = {
+    enabled = false,
+  },
 })
 
 -- nice iconf for disagnostics instead of letters
@@ -157,3 +160,14 @@ vim.diagnostic.config({
 })
 
 vim.lsp.enable('bashls')
+
+-- leap remap s to anywahere so I don't need to care if destination if before or after cursor
+vim.keymap.set({'n', 'x', 'o'}, 's', '<Plug>(leap-anywhere)')
+
+-- scrolling the window without moving the cursor
+-- vim.keymap.set("n", "<C-E>", "5<C-e>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<C-Y>", "5<C-y>", { noremap = true, silent = true })
+
+-- shortcuts to most used mini-surround motions
+vim.keymap.set("n", "<leader>\"", "<leader>saiW\"", {remap = true})
+vim.keymap.set("n", "<leader>'", "<leader>saiW'", {remap = true})
